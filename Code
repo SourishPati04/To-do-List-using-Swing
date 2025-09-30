@@ -1,0 +1,56 @@
+I created a basic To-Do List using java SWING framework
+## Code ##
+
+package Swing;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class To_doapp {
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("To-Do List");
+        frame.setSize(400, 400);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+
+        DefaultListModel<String> listModel = new DefaultListModel<>();
+        JList<String> taskList = new JList<>(listModel);
+        JTextField taskField = new JTextField(20);
+        JButton addButton = new JButton("Add task");
+        JButton deleteButton = new JButton("Delete Task");
+
+        JPanel panel = new JPanel();
+        panel.add(taskField);
+        panel.add(addButton);
+        panel.add(deleteButton);
+
+        frame.setLayout(new BorderLayout());
+        frame.add(panel, BorderLayout.NORTH);
+        frame.add(new JScrollPane(taskList), BorderLayout.CENTER);
+
+        addButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String task = taskField.getText().trim();
+                if(!task.isEmpty()){
+                    listModel.addElement(task);
+                    taskField.setText(" ");
+                }
+            }
+        });
+
+        deleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedIndex = taskList.getSelectedIndex();
+                if (selectedIndex !=-1){
+                    listModel.remove(selectedIndex);
+                }
+            }
+        });
+
+        frame.setVisible(true);
+    }
+}
